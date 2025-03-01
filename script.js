@@ -1,18 +1,32 @@
 const blogPosts = document.querySelector(".blog-posts");
+const loadMoreTrigger = document.querySelector(".load-more");
+
+let isFetching = false;
+let skip = 0;
+let limit = 12;
 
 async function fetchBlogPosts() {
-  const response = await fetch("https://dummyjson.com/posts?limit=12");
+  if (isFetching) return;
+  isFetching = false;
+
+  const response = await fetch(
+    `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
+  );
   const data = await response.json();
-  console.log(data);
-  return data;
+
+  if (data.posts.length === 0) {
+    observer.disconnect();
+    loadMoreTrigger.innerText = "No more posts to load.";
+    return;
+  }
+
+  renderPosts(data.posts);
+  skip += limit;
+  isFetching = false;
 }
 
-fetchBlogPosts();
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetchBlogPosts();
-
-  const posts = data.posts
+function renderPosts(posts) {
+  const postsHTML = posts
     .map((post) => {
       return `<div class="card">
   <h2 class="title">${post.title}</h2>
@@ -34,5 +48,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
     .join("");
 
-  blogPosts.innerHTML = posts;
-});
+  blogPosts.insertAdjacentHTML("beforeend", postsHTML);
+}
+
+//Intersection Observer api setup
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    const target = entries[0];
+
+    if (target.isIntersecting) {
+      fetchBlogPosts();
+    }
+  },
+  { rootMargin: "100px" }
+);
+
+observer.observe(loadMoreTrigger);
+//Load initial posts on page load
+fetchBlogPosts();
