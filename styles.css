@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 50px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+}
+
+.links {
+  display: flex;
+  gap: 10px;
+  list-style-type: none;
+}
+
+.links a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-right {
+  display: flex;
+  gap: 30px;
+}
+
+.search-bar {
+  border: none;
+  background-color: rgb(181, 177, 177);
+  padding: 7px 15px;
+  border-radius: 20px;
+  outline: none;
+}
+
+.dark-mode-toggle {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.blog-posts {
+  position: relative;
+  z-index: 1;
+  padding: 20px 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  justify-self: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 30px 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card button {
+  border: none;
+  padding: 5px 0;
+  border-radius: 5px;
+  background-color: blueviolet;
+  color: white;
+  cursor: pointer;
+}
+
+.tags {
+  display: flex;
+  color: rgb(122, 122, 122);
+  gap: 10px;
+}
