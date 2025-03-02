@@ -1,5 +1,8 @@
 const blogPosts = document.querySelector(".blog-posts");
 const loadMoreTrigger = document.querySelector(".load-more");
+const darkModeToggle = document.querySelector(".dark-mode-toggle");
+const image = document.querySelector(".img");
+const body = document.body;
 
 let isFetching = false;
 let skip = 0;
@@ -40,7 +43,7 @@ function renderPosts(posts) {
   <div class="stats">
     <span>👍 ${post.reactions.likes}</span>
     <span>👎 ${post.reactions.dislikes}</span>
-    <span>👀 ${post.views}views</span>
+    <span>👀 ${post.views} views</span>
   </div>
   <button class="read-more">Read More</button>
 </div>
@@ -67,3 +70,9 @@ const observer = new IntersectionObserver(
 observer.observe(loadMoreTrigger);
 //Load initial posts on page load
 fetchBlogPosts();
+
+//adding the dark mode functionality
+darkModeToggle.addEventListener("click", () => {
+  body.classList.toggle("dark-mode");
+  image.classList.toggle("darkModeImage");
+});

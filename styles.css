@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 .nav {
@@ -18,13 +21,17 @@
 
 .links {
   display: flex;
-  gap: 10px;
+  gap: 50px;
   list-style-type: none;
 }
 
 .links a {
   text-decoration: none;
   color: black;
+}
+
+.links a:hover {
+  color: blue;
 }
 
 .nav-right {
@@ -43,8 +50,10 @@
 .dark-mode-toggle {
   border: none;
   background-color: transparent;
-  font-size: 20px;
   cursor: pointer;
+}
+.dark-mode-toggle img {
+  height: 20px;
 }
 
 .blog-posts {
@@ -69,17 +78,76 @@
   gap: 15px;
 }
 
-.card button {
-  border: none;
-  padding: 5px 0;
-  border-radius: 5px;
-  background-color: blueviolet;
-  color: white;
-  cursor: pointer;
-}
-
 .tags {
   display: flex;
   color: rgb(122, 122, 122);
   gap: 10px;
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+}
+
+.whole-container {
+  padding-bottom: 20px;
+}
+
+.stats {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.read-more {
+  background: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.read-more:hover {
+  background: #0056b3;
+}
+
+/* dark mode */
+body {
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+/* Dark mode for navbar */
+.dark-mode .nav {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .nav .links li a {
+  color: white;
+}
+
+/* Dark mode for search bar */
+.dark-mode .search-bar {
+  background-color: #333;
+  color: white;
+}
+
+/* Dark mode for blog posts */
+.dark-mode .card {
+  background-color: #222;
+  color: white;
+}
+
+/* Dark mode toggle button */
+.darkModeImage {
+  filter: invert(100%);
 }
