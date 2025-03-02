@@ -1,16 +1,18 @@
 const blogPosts = document.querySelector(".blog-posts");
 const loadMoreTrigger = document.querySelector(".load-more");
+const searchBar = document.querySelector(".search-bar"); // Get search input
 const darkModeToggle = document.querySelector(".dark-mode-toggle");
 const image = document.querySelector(".img");
 const body = document.body;
 
+let allPosts = []; // Store all posts for searching
 let isFetching = false;
 let skip = 0;
 let limit = 12;
 
 async function fetchBlogPosts() {
   if (isFetching) return;
-  isFetching = false;
+  isFetching = true;
 
   const response = await fetch(
     `https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
@@ -23,39 +25,48 @@ async function fetchBlogPosts() {
     return;
   }
 
-  renderPosts(data.posts);
+  allPosts = [...allPosts, ...data.posts]; // Store fetched posts
+  renderPosts(allPosts); // Render all posts
   skip += limit;
   isFetching = false;
 }
 
 function renderPosts(posts) {
+  blogPosts.innerHTML = "";
   const postsHTML = posts
     .map((post) => {
       return `<div class="card">
-  <h2 class="title">${post.title}</h2>
-  <p class="body">
-    ${post.body.split(" ").slice(0, 7).join(" ")}...
-  </p>
-  <div class="tags">
-    ${post.tags.map((tag) => `<span>#${tag}</span>`).join("")}
-    
-  </div>
-  <div class="stats">
-    <span>👍 ${post.reactions.likes}</span>
-    <span>👎 ${post.reactions.dislikes}</span>
-    <span>👀 ${post.views} views</span>
-  </div>
-  <button class="read-more">Read More</button>
-</div>
-    `;
+        <h2 class="title">${post.title}</h2>
+        <p class="body">
+          ${post.body.split(" ").slice(0, 7).join(" ")}...
+        </p>
+        <div class="tags">
+          ${post.tags.map((tag) => `<span>#${tag}</span>`).join("")}
+        </div>
+        <div class="stats">
+          <span>👍 ${post.reactions.likes}</span>
+          <span>👎 ${post.reactions.dislikes}</span>
+          <span>👀 ${post.views} views</span>
+        </div>
+        <button class="read-more">Read More</button>
+      </div>`;
     })
     .join("");
 
   blogPosts.insertAdjacentHTML("beforeend", postsHTML);
 }
 
-//Intersection Observer api setup
+// Implement Search Functionality
+searchBar.addEventListener("input", () => {
+  const searchQuery = searchBar.value.toLowerCase();
+  const filteredPosts = allPosts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery)
+  );
 
+  renderPosts(filteredPosts); // Display only matching posts
+});
+
+// Intersection Observer API setup for Infinite Scroll
 const observer = new IntersectionObserver(
   (entries) => {
     const target = entries[0];
@@ -68,10 +79,9 @@ const observer = new IntersectionObserver(
 );
 
 observer.observe(loadMoreTrigger);
-//Load initial posts on page load
-fetchBlogPosts();
+fetchBlogPosts(); // Load initial posts
 
-//adding the dark mode functionality
+// Adding dark mode functionality
 darkModeToggle.addEventListener("click", () => {
   body.classList.toggle("dark-mode");
   image.classList.toggle("darkModeImage");
